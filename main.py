@@ -1,3 +1,5 @@
+from typing import Union, Any
+
 import pyautogui
 import time
 import webbrowser
@@ -5,10 +7,12 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
+city = input('당신의 학교가 있는 시/도를 입력하세요(예시 : 부산광역시) : ')
+schoolLevel = input('당신의 학교의 학교 등급을 입력하세요(예시 : 고등학교) : ')
 username = input('이름을 입력하세요(예시 : 정승민) : ')
 birthday = input('생일을 입력하세요(예시 : 050203) : ')
 
-city = {
+cityDict = {
     "서울특별시": 1,
     "부산광역시": 2,
     "대구광역시": 3,
@@ -28,26 +32,39 @@ city = {
     "제주특별자치도": 17
 }
 
+schoolLevelDict = {
+    "유치원": 1,
+    "초등학교": 2,
+    "중학교": 3,
+    "고등학교": 4,
+    "특수학교 등": 5
+}
+
+for key, value in cityDict.items():
+    if key == city:
+        cityValue = value
+
+for key, value in schoolLevelDict.items():
+    if key == schoolLevel:
+        schoolLevelValue = value
+
+
 driver = webdriver.Chrome()
 url = 'https://hcs.eduro.go.kr/#/loginHome'
 driver.get(url)
 
 time.sleep(1)
-
-# go = pyautogui.locateCenterOnScreen('images/go.png', confidence=0.8)
-# pyautogui.click(go)
-
 driver.find_element(By.ID, 'btnConfirm2').click()
 
-# driver.find_element(By.ID, 'user_name_input').click()
 driver.find_element(By.ID, 'schul_name_input').click()
-pyautogui.typewrite(['enter'])
-driver.find_element(By.ID, 'user_name_input').send_keys(username)
-driver.find_element(By.ID, 'birthday_input').send_keys(birthday)
+time.sleep(1)
 
-# time.sleep(0.5)
-# name = pyautogui.locateCenterOnScreen('images/name.png', confidence=0.8)
-# pyautogui.click(name)
-# time.sleep(1)
-# print(a)
-# pyautogui.typewrite(a)
+for i in range(cityValue):
+    driver.find_element(By.ID, 'sidolabel').send_keys(Keys.ARROW_DOWN)
+
+for i in range(schoolLevelValue):
+    driver.find_element(By.ID, 'crseScCode').send_keys(Keys.ARROW_DOWN)
+
+# driver.find_element(By.CLASS_NAME, "layerFullBtn").click()
+# driver.find_element(By.ID, 'user_name_input').send_keys(username)
+# driver.find_element(By.ID, 'birthday_input').send_keys(birthday)
