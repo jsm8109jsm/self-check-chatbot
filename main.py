@@ -7,10 +7,17 @@ from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
-city = input('당신의 학교가 있는 시/도를 입력하세요(예시 : 부산광역시) : ')
-schoolLevel = input('당신의 학교의 학교 등급을 입력하세요(예시 : 고등학교) : ')
-username = input('이름을 입력하세요(예시 : 정승민) : ')
-birthday = input('생일을 입력하세요(예시 : 050203) : ')
+# city = input('당신의 학교가 있는 시/도를 입력하세요(예시 : 부산광역시) : ')
+# schoolLevel = input('당신의 학교의 학교 등급을 입력하세요(예시 : 고등학교) : ')
+# schoolName = input('당신의 학교의 이름을 입력하세요(예시 : 부산소프트웨어마이스터고등학교) : ')
+# username = input('이름을 입력하세요(예시 : 정승민) : ')
+# birthday = input('생일을 입력하세요(예시 : 050203) : ')
+
+city = '부산광역시'
+schoolLevel = '고등학교'
+schoolName = '부산소프트웨어마이스터고등학교'
+username = '정승민'
+birthday = '050203'
 
 cityDict = {
     "서울특별시": 1,
@@ -65,6 +72,11 @@ for i in range(cityValue):
 for i in range(schoolLevelValue):
     driver.find_element(By.ID, 'crseScCode').send_keys(Keys.ARROW_DOWN)
 
-# driver.find_element(By.CLASS_NAME, "layerFullBtn").click()
-# driver.find_element(By.ID, 'user_name_input').send_keys(username)
-# driver.find_element(By.ID, 'birthday_input').send_keys(birthday)
+driver.find_element(By.ID, 'orgname').send_keys(schoolName)
+driver.find_element(By.CLASS_NAME, 'searchBtn').click()
+time.sleep(0.5)
+driver.find_element(By.XPATH, "/html/body/div/div/div/div/div/div[2]/div[1]/ul/li/a/p").click()
+
+driver.find_element(By.CLASS_NAME, "layerFullBtn").click()
+driver.find_element(By.ID, 'user_name_input').send_keys(username)
+driver.find_element(By.ID, 'birthday_input').send_keys(birthday)
