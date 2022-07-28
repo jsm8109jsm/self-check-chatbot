@@ -2,7 +2,7 @@ from typing import Union, Any
 
 import pyautogui
 import time
-import webbrowser
+import random
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -18,6 +18,7 @@ schoolLevel = '고등학교'
 schoolName = '부산소프트웨어마이스터고등학교'
 username = '정승민'
 birthday = '050203'
+password = '0203'
 
 cityDict = {
     "서울특별시": 1,
@@ -60,11 +61,11 @@ driver = webdriver.Chrome()
 url = 'https://hcs.eduro.go.kr/#/loginHome'
 driver.get(url)
 
-time.sleep(1)
+time.sleep(1 + random.random())
 driver.find_element(By.ID, 'btnConfirm2').click()
 
 driver.find_element(By.ID, 'schul_name_input').click()
-time.sleep(1)
+time.sleep(1 + random.random())
 
 for i in range(cityValue):
     driver.find_element(By.ID, 'sidolabel').send_keys(Keys.ARROW_DOWN)
@@ -74,9 +75,20 @@ for i in range(schoolLevelValue):
 
 driver.find_element(By.ID, 'orgname').send_keys(schoolName)
 driver.find_element(By.CLASS_NAME, 'searchBtn').click()
-time.sleep(0.5)
+time.sleep(0.5 + random.random())
 driver.find_element(By.XPATH, "/html/body/div/div/div/div/div/div[2]/div[1]/ul/li/a/p").click()
 
 driver.find_element(By.CLASS_NAME, "layerFullBtn").click()
 driver.find_element(By.ID, 'user_name_input').send_keys(username)
 driver.find_element(By.ID, 'birthday_input').send_keys(birthday)
+
+driver.find_element(By.CLASS_NAME, 'keyboard-icon').click()
+
+for i in range(len(password)):
+    a = pyautogui.locateCenterOnScreen('images/' + password[i] + '.png', confidence=0.9)
+    pyautogui.click(a)
+    print(a)
+    time.sleep(1 + random.random())
+
+enter = pyautogui.locateCenterOnScreen('images/enter.png', confidence=0.9)
+pyautogui.click(enter)
